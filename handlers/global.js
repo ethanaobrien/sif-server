@@ -13,7 +13,7 @@ const rel_info = [
 ]
 
 function timestamp() {
-	return Math.floor(Date.now() / 1000);
+    return Math.floor(Date.now() / 1000);
 }
 
 function consumeBody(res) {

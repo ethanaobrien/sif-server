@@ -3,7 +3,8 @@ const fs = require("fs");
 
 const workaroundUnitBatchDL = true;
 const official_cdn_domain = 'http://dnw5grz2619mn.cloudfront.net';
-const cdn_path = 'http://localhost:8080';
+const cdn_path = 'http://192.168.1.15:51376';
+const microdl_dir = 'http://192.168.1.15:51376/v7/micro_download/<OS>/<VER>/'
 
 function getHostPort(req) {
     return req.protocol + "://" + req.headers.host.replace("localhost", "127.0.0.1")
@@ -86,7 +87,7 @@ async function update(req, res) {
         return;
     }
     const body = parseBody((await consumeBody(req)).toString());
-    console.log(body);
+    //console.log(body);
     
     const toSend = {
         "response_data": getDLResponse(getHostPort(req), 'update', body),
@@ -99,7 +100,6 @@ async function update(req, res) {
     signResp(req, res, data);
     res.send(data);
     res.end();
-    
 }
 
 async function event(req, res) {
@@ -122,4 +122,66 @@ async function event(req, res) {
     res.end();
 }
 
-module.exports = {update, event};
+async function additional(req, res) {
+    const body = parseBody((await consumeBody(req)).toString());
+    //console.log(body);
+    
+    const toSend = {
+        "response_data": getDLResponse(getHostPort(req), 'additional', body),
+        "release_info": rel_info,
+        "status_code": 200
+    }
+    //console.log(toSend);
+    
+    const data = JSON.stringify(toSend);
+    signResp(req, res, data);
+    res.send(data);
+    res.end();
+}
+
+async function batch(req, res) {
+    const body = parseBody((await consumeBody(req)).toString());
+    //console.log(body);
+    
+    const toSend = {
+        "response_data": getDLResponse(getHostPort(req), 'batch', body),
+        "release_info": rel_info,
+        "status_code": 200
+    }
+    //console.log(toSend);
+    
+    const data = JSON.stringify(toSend);
+    signResp(req, res, data);
+    res.send(data);
+    res.end();
+}
+
+async function getUrl(req, res) {
+    const body = parseBody((await consumeBody(req)).toString());
+	let ver = '59.4';
+	if (req.header('Client-Version') != undefined) {
+		ver = req.header('Client-Version');
+	}
+
+    let base_dir = microdl_dir.replace('<OS>', body.os.toLowerCase()).replace("<VER>", ver);
+    const list = [];
+    for (x of body.path_list) {
+        let link = (base_dir + x);
+        list.push(link);
+    }
+
+	let toSend = {
+		response_data: {
+			url_list: list
+		},
+		release_info: rel_info,
+		status_code: 200
+	}
+    console.log(toSend);
+    const data = JSON.stringify(toSend);
+    signResp(req, res, data);
+    res.send(data);
+    res.end();
+}
+
+module.exports = {update, event, additional, batch, getUrl};

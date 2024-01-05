@@ -1,0 +1,152 @@
+{
+    "unit_support_list": [
+        {
+            "unit_id": 28,
+            "amount": 98
+        },
+        {
+            "unit_id": 29,
+            "amount": 109
+        },
+        {
+            "unit_id": 30,
+            "amount": 99
+        },
+        {
+            "unit_id": 89,
+            "amount": 254
+        },
+        {
+            "unit_id": 379,
+            "amount": 51
+        },
+        {
+            "unit_id": 380,
+            "amount": 24
+        },
+        {
+            "unit_id": 381,
+            "amount": 48
+        },
+        {
+            "unit_id": 382,
+            "amount": 128
+        },
+        {
+            "unit_id": 383,
+            "amount": 26
+        },
+        {
+            "unit_id": 384,
+            "amount": 22
+        },
+        {
+            "unit_id": 385,
+            "amount": 34
+        },
+        {
+            "unit_id": 386,
+            "amount": 18
+        },
+        {
+            "unit_id": 387,
+            "amount": 6
+        },
+        {
+            "unit_id": 388,
+            "amount": 7
+        },
+        {
+            "unit_id": 389,
+            "amount": 2
+        },
+        {
+            "unit_id": 390,
+            "amount": 5
+        },
+        {
+            "unit_id": 632,
+            "amount": 227
+        },
+        {
+            "unit_id": 1024,
+            "amount": 285
+        },
+        {
+            "unit_id": 1050,
+            "amount": 13
+        },
+        {
+            "unit_id": 1072,
+            "amount": 67
+        },
+        {
+            "unit_id": 1085,
+            "amount": 5
+        },
+        {
+            "unit_id": 1142,
+            "amount": 222
+        },
+        {
+            "unit_id": 1354,
+            "amount": 33
+        },
+        {
+            "unit_id": 1355,
+            "amount": 20
+        },
+        {
+            "unit_id": 1356,
+            "amount": 15
+        },
+        {
+            "unit_id": 1409,
+            "amount": 1
+        },
+        {
+            "unit_id": 1410,
+            "amount": 5
+        },
+        {
+            "unit_id": 1411,
+            "amount": 13
+        },
+        {
+            "unit_id": 2015,
+            "amount": 1
+        },
+        {
+            "unit_id": 2016,
+            "amount": 1
+        },
+        {
+            "unit_id": 2354,
+            "amount": 9
+        },
+        {
+            "unit_id": 2355,
+            "amount": 10
+        },
+        {
+            "unit_id": 2356,
+            "amount": 11
+        },
+        {
+            "unit_id": 2371,
+            "amount": 1
+        },
+        {
+            "unit_id": 2372,
+            "amount": 1
+        },
+        {
+            "unit_id": 2547,
+            "amount": 3
+        },
+        {
+            "unit_id": 2548,
+            "amount": 2
+        }
+    ]
+}

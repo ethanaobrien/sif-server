@@ -5,7 +5,7 @@ async function authKey(req, res) {
     const body = parseBody((await consumeBody(req)).toString());
     //console.log(body);
     
-    console.log("login.authkey");
+    //console.log("login.authkey");
     const resp = {
         "response_data": {
             "authorize_token": btoa(body.device_token),

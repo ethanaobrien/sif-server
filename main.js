@@ -21,18 +21,30 @@ const user = require("./handlers/user.js");
 app.post("/main.php/user/userInfo", user.userInfo);
 app.post("/main.php/user/changeName", user.changeName);
 
+app.post('/main.php/lbonus/execute', user.lbonus_execute)
+
 app.post("/main.php/gdpr/*", user.gdpr);
 
 app.post("/main.php/tos/*", user.tos);
 
+app.post("/main.php/handover/kidStatus", user.kidStatus);
+
 // TODO!!
 app.post("/main.php/tutorial/*", user.tutorial);
 
+const api = require("./handlers/api.js");
+
+app.post("/main.php/api", api.api);
 
 const download = require("./handlers/download.js");
 app.post("/main.php/download/update", download.update);
 app.post("/main.php/download/event", download.event);
+app.post('/main.php/download/additional', download.additional)
+app.post('/main.php/download/batch', download.batch)
+app.post('/main.php/download/getUrl', download.getUrl)
 
+const misc = require("./handlers/misc.js");
+app.post("/main.php/personalnotice/get", misc.personalnoticeGet);
 
 app.get("/server_info.zip", (req, res) => {
     res.sendFile(__dirname + "/server_info.zip");
