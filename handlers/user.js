@@ -113,7 +113,20 @@ async function kidStatus(req, res) {
     signResp(req, res, toSend);
     res.send(toSend);
     res.end();
-    
 }
 
-module.exports = {userInfo, gdpr, tos, changeName, tutorial, lbonus_execute, kidStatus};
+async function setNotificationToken(req, res) {
+    //const body = parseBody((await consumeBody(req)).toString());
+    const resp = {
+        "response_data": [],
+        "release_info": rel_info,
+        "status_code": 200
+    }
+    
+    const toSend = JSON.stringify(resp);
+    signResp(req, res, toSend);
+    res.send(toSend);
+    res.end();
+}
+
+module.exports = {userInfo, gdpr, tos, changeName, tutorial, lbonus_execute, kidStatus, setNotificationToken};

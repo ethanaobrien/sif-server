@@ -158,10 +158,10 @@ async function batch(req, res) {
 
 async function getUrl(req, res) {
     const body = parseBody((await consumeBody(req)).toString());
-	let ver = '59.4';
-	if (req.header('Client-Version') != undefined) {
-		ver = req.header('Client-Version');
-	}
+    let ver = '59.4';
+    if (req.header('Client-Version') != undefined) {
+        ver = req.header('Client-Version');
+    }
 
     let base_dir = microdl_dir.replace('<OS>', body.os.toLowerCase()).replace("<VER>", ver);
     const list = [];
@@ -170,14 +170,13 @@ async function getUrl(req, res) {
         list.push(link);
     }
 
-	let toSend = {
-		response_data: {
-			url_list: list
-		},
-		release_info: rel_info,
-		status_code: 200
-	}
-    console.log(toSend);
+    let toSend = {
+        response_data: {
+            url_list: list
+        },
+        release_info: rel_info,
+        status_code: 200
+    }
     const data = JSON.stringify(toSend);
     signResp(req, res, data);
     res.send(data);

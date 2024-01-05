@@ -3,7 +3,7 @@ const uids = {};
 const fs = require("fs");
 // todo - cleanup
 const live_status_template = require("./liveStatus.json");
-const unit_status_template = fs.readFileSync("./handlers/unitStatus.json");
+const unit_status_template = require("./unitStatus.json");
 const {timestamp} = require("./global.js");
 
 //needs to be changed...
@@ -48,9 +48,9 @@ function createAccount(token) {
             "server_timestamp": "<TIMESTAMP>"
         },
         liveData: JSON.parse(JSON.stringify(live_status_template)),
-        unitData: JSON.parse(unit_status_template),
-        unitDataReadable: JSON.parse(unit_status_template),
-        deckData: {
+        unitData: JSON.parse(JSON.stringify(unit_status_template)),
+        unitDataReadable: JSON.parse(JSON.stringify(unit_status_template)),
+        deckData: [{
             "unit_deck_id": 1,
             "main_flag": true,
             "deck_name": "deck 1",
@@ -92,7 +92,8 @@ function createAccount(token) {
                     "unit_owning_user_id": 460498714
                 }
             ]
-        }
+        }],
+        current_deck: 1
     }
     uids[users[token]] = users[token].unitData;
     refreshUnitAll(token);
@@ -142,18 +143,33 @@ function getDeckData(token) {
     return users[token].deckData;
 }
 function refreshUnitAll(token) {
-	let newList = {
-		active: [],
-		waiting: []
-	}
+    let newList = {
+        active: [],
+        waiting: []
+    }
 
-	for (entries of Object.entries(users[token].unitData.active)) {
-		newList.active.push(entries[1]);
-	}
-	for (entries of Object.entries(users[token].unitData.waiting)) {
-		newList.waiting.push(entries[1]);
-	}
+    for (entries of Object.entries(users[token].unitData.active)) {
+        newList.active.push(entries[1]);
+    }
+    for (entries of Object.entries(users[token].unitData.waiting)) {
+        newList.waiting.push(entries[1]);
+    }
     users[token].unitDataReadable = newList;
 }
+function getCurrentDeckId(token) {
+    if (!users[token]) {
+        createAccount(token);
+    }
+    return users[token].current_deck;
+}
+function setCurrentDeckId(token, id) {
+    if (!users[token]) {
+        createAccount(token);
+    }
+    users[token].current_deck = id;
+}
+function updateLiveStatus() {
+    
+}
 
-module.exports = {getInfo, getUserData, setName, getLiveStatus, getUnitData, extraUser, getUnit, getDeckData};
+module.exports = {getInfo, getUserData, setName, getLiveStatus, getUnitData, extraUser, getUnit, getDeckData, getCurrentDeckId, setCurrentDeckId, updateLiveStatus};

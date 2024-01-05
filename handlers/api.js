@@ -53,7 +53,7 @@ async function api(req, res) {
     //console.log(body);
     let resp_data = [];
     let time = req.headers.authorize.split("timeStamp=").pop().split("&")[0];
-	time = timestamp();
+    time = timestamp();
     
     body.forEach(request => {
         let sfilename = "static/main.php-api/" + request.module + "." + request.action + ".result.json";
@@ -797,17 +797,16 @@ async function api(req, res) {
         console.log(resp_data.length != dlen ? 'handled' : 'unhandled', request.module + '.' + request.action)
     
     })
-	
+    
     full_resp_body = {
         response_data: resp_data,
         release_info: rel_info,
         status_code: 200
     }
     let toSend = JSON.stringify(full_resp_body).replaceAll('1680254953', time);
-    if (toSend.length > 10000) toSend = fs.readFileSync("main- 1704439132956.json", {encoding:"utf-8"});
     signResp(req, res, toSend);
     res.send(toSend);
     res.end();
 }
 
-module.exports = {api};
+module.exports = {api, game_consts};

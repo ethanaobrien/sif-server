@@ -20,6 +20,7 @@ app.post("/main.php/login/login", login.login);
 const user = require("./handlers/user.js");
 app.post("/main.php/user/userInfo", user.userInfo);
 app.post("/main.php/user/changeName", user.changeName);
+app.post("/main.php/user/setNotificationToken", user.setNotificationToken);
 
 app.post('/main.php/lbonus/execute', user.lbonus_execute)
 
@@ -35,6 +36,13 @@ app.post("/main.php/tutorial/*", user.tutorial);
 const api = require("./handlers/api.js");
 
 app.post("/main.php/api", api.api);
+
+const live = require("./handlers/live.js");
+app.post("/main.php/live/partyList", live.partyList);
+app.post("/main.php/live/play", live.play);
+app.post("/main.php/live/gameover", live.gameOver);
+app.post("/main.php/live/preciseScore", live.preciseScore);
+app.post("/main.php/live/reward", live.reward);
 
 const download = require("./handlers/download.js");
 app.post("/main.php/download/update", download.update);
