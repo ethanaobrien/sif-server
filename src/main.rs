@@ -69,11 +69,11 @@ impl LlsifServer {
         if res.path == "/main.php/login/authkey" {
             router::login::authkey(res);
         } else if res.path == "/main.php/login/startUp" {
-            
+            router::login::start_up(res);
         } else if res.path == "/main.php/login/login" {
-            
+            router::login::login(res);
         } else if res.path == "/main.php/login/topInfo" {
-            
+            router::login::top_info(res);
         } else if res.path.starts_with("/main.php/tos/") {
             
         } else if res.path.starts_with("/main.php/gdpr/") {
