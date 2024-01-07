@@ -4,8 +4,13 @@ use openssl::rsa::Rsa;
 use openssl::sign::{Signer, Verifier};
 use openssl::pkey::PKey;
 use openssl::hash::MessageDigest;
-
 use std::time::{SystemTime, UNIX_EPOCH};
+use json::object;
+
+pub fn release_info() -> json::JsonValue {
+    return json::parse(r#"[{"id":423,"key":"UDKkj/dmBRbz+CIB+Ekqyg=="},{"id":1870,"key":"Lckl38UoH8CfOMqMSmMYsA=="},{"id":1871,"key":"acAmAWyPOCrO+R5qY9UTtQ=="},{"id":1872,"key":"LaLzU62pKnTftSEGFhMqfA=="},{"id":1873,"key":"wiaaGZSJexvY0u4poRrGSw=="}]"#).unwrap();
+}
+
 
 pub fn timestamp() -> String {
     let now = SystemTime::now();
@@ -32,4 +37,10 @@ pub fn sign_and_send(req: &mut Request, body: &str) {
     req.set_header("X-Message-Sign", &msg_sign_base64);
     req.write(body.as_bytes());
     req.end();
+}
+
+pub fn read_body(req: &mut Request) -> json::JsonValue {
+    let body = req.read_all_string();
+    let result = body.split("\n").collect::<Vec<_>>()[3].split("\n").collect::<Vec<_>>()[0];
+    return json::parse(result).unwrap();
 }
