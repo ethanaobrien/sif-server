@@ -32,7 +32,7 @@ impl LlsifServer {
     fn on_websocket(mut res: WebSocketParser, _opts: Settings) {
         //ignore for now... I need to add the ability to terminate the connection
     }
-    fn on_request(mut res:Request, opts: Settings) {
+    fn on_request(mut res:Request, _opts: Settings) {
         println!("Request: {} {}", res.method, res.path);
         res.set_header("Connection", "keep-alive");
         res.set_header("Accept-ranges", "bytes");
@@ -40,15 +40,15 @@ impl LlsifServer {
         //https://docs.rs/sqlite/latest/sqlite/
         //https://docs.rs/json/latest/json/
         
-        //if res.method == "GET" || res.method == "HEAD" {
-        //    Self::get(res, opts, rewrite_to);
+        if res.method == "GET" || res.method == "HEAD" {
+            Self::get(res);
         //} else if res.method == "OPTIONS" {
         //    res.end();
-        //} else {
-            Self::error(res, opts, "", 501);
-        //}
+        } else {
+            Self::error(res, "", 501);
+        }
     }
-    fn error(mut res:Request, opts: Settings, msg: &str, code: i32) {
+    fn error(mut res:Request, msg: &str, code: i32) {
         if code == 401 {
             res.set_header("WWW-Authenticate", "Basic realm=\"Server\", charset=\"UTF-8\"");
         }
@@ -62,8 +62,157 @@ impl LlsifServer {
         }
         res.end();
     }
-    fn get(mut res:Request, opts: Settings, rewrite_to: &str) {
-		
+    fn get(mut res:Request) {
+        if res.path == "/main.php/login/authkey" {
+            
+        }
+        if res.path == "/main.php/login/startUp" {
+            
+        }
+        if res.path == "/main.php/login/login" {
+            
+        }
+        if res.path == "/main.php/login/topInfo" {
+            
+        }
+        if res.path.starts_with("/main.php/tos/") {
+            
+        }
+        if res.path.starts_with("/main.php/gdpr/") {
+            
+        }
+        if res.path.starts_with("/main.php/tutorial/") {
+            
+        }
+        if res.path == "/main.php/lbonus/execute" {
+            
+        }
+        if res.path == "/main.php/handover/kidStatus" {
+            
+        }
+        if res.path == "/main.php/friend/list" {
+            
+        }
+        if res.path == "/main.php/user/userInfo" {
+            
+        }
+        if res.path == "/main.php/user/changeName" {
+            
+        }
+        if res.path == "/main.php/user/changeNavi" {
+            
+        }
+        if res.path == "/main.php/download/update" {
+            
+        }
+        if res.path == "/main.php/download/event" {
+            
+        }
+        if res.path == "/main.php/download/additional" {
+            
+        }
+        if res.path == "/main.php/download/batch" {
+            
+        }
+        if res.path == "/main.php/download/getUrl" {
+            
+        }
+        if res.path == "/main.php/api" {
+            
+        }
+        if res.path == "/main.php/ranking/live" {
+            
+        }
+        if res.path == "/main.php/ranking/player" {
+            
+        }
+        if res.path == "/main.php/unit/deck" {
+            
+        }
+        if res.path == "/main.php/unit/deckName" {
+            
+        }
+        if res.path == "/main.php/unit/setDisplayRank" {
+            
+        }
+        if res.path == "/main.php/live/partyList" {
+            
+        }
+        if res.path == "/main.php/live/preciseScore" {
+            
+        }
+        if res.path == "/main.php/live/play" {
+            
+        }
+        if res.path == "/main.php/live/reward" {
+            
+        }
+        if res.path == "/main.php/notice/noticeFriendGreeting" {
+            
+        }
+        if res.path == "/main.php/notice/noticeFriendVariety" {
+            
+        }
+        if res.path == "/main.php/notice/noticeUserGreetingHistory" {
+            
+        }
+        if res.path == "/main.php/award/set" {
+            
+        }
+        if res.path == "/main.php/background/set" {
+            
+        }
+        if res.path == "/main.php/profile/profileRegister" {
+            
+        }
+        if res.path == "/main.php/area/list" {
+            
+        }
+        if res.path == "/main.php/announce/checkState" {
+            
+        }
+        if res.path == "/main.php/personalnotice/get" {
+            
+        }
+        if res.path == "/main.php/event/eventList" {
+            
+        }
+        if res.path == "/main.php/payment/productList" {
+            
+        }
+        if res.path == "/main.php/payment/month" {
+            
+        }
+        if res.path == "/main.php/exchange/itemInfo" {
+            
+        }
+        if res.path == "/main.php/album/seriesAll" {
+            
+        }
+        if res.path == "/main.php/museum/info" {
+            
+        }
+        if res.path == "/main.php/banner/bannerList" {
+            
+        }
+        if res.path == "/main.php/secretbox/pon" {
+            
+        }
+        if res.path == "/main.php/secretbox/multi" {
+            
+        }
+        if res.path == "/main.php/scenario/reward" {
+            
+        }
+        if res.path == "/main.php/subscenario/reward" {
+            
+        }
+        if res.path == "/main.php/multiunit/scenarioReward" {
+            
+        }
+        if res.path == "/main.php/reward/rewardHistory" {
+            
+        }
     }
 }
 
