@@ -9,6 +9,8 @@ use server::{
     decode_base64
 };
 
+mod router;
+
 pub struct LlsifServer {
     server: Server
 }
@@ -40,8 +42,8 @@ impl LlsifServer {
         //https://docs.rs/sqlite/latest/sqlite/
         //https://docs.rs/json/latest/json/
         
-        if res.method == "GET" || res.method == "HEAD" {
-            Self::get(res);
+        if res.method == "POST" {
+            Self::post(res);
         //} else if res.method == "OPTIONS" {
         //    res.end();
         } else {
@@ -62,155 +64,107 @@ impl LlsifServer {
         }
         res.end();
     }
-    fn get(mut res:Request) {
+    fn post(mut res:Request) {
+        //this is not acceptible me
         if res.path == "/main.php/login/authkey" {
+            router::login::authkey(res);
+        } else if res.path == "/main.php/login/startUp" {
             
-        }
-        if res.path == "/main.php/login/startUp" {
+        } else if res.path == "/main.php/login/login" {
             
-        }
-        if res.path == "/main.php/login/login" {
+        } else if res.path == "/main.php/login/topInfo" {
             
-        }
-        if res.path == "/main.php/login/topInfo" {
+        } else if res.path.starts_with("/main.php/tos/") {
             
-        }
-        if res.path.starts_with("/main.php/tos/") {
+        } else if res.path.starts_with("/main.php/gdpr/") {
             
-        }
-        if res.path.starts_with("/main.php/gdpr/") {
+        } else if res.path.starts_with("/main.php/tutorial/") {
             
-        }
-        if res.path.starts_with("/main.php/tutorial/") {
+        } else if res.path == "/main.php/lbonus/execute" {
             
-        }
-        if res.path == "/main.php/lbonus/execute" {
+        } else if res.path == "/main.php/handover/kidStatus" {
             
-        }
-        if res.path == "/main.php/handover/kidStatus" {
+        } else if res.path == "/main.php/friend/list" {
             
-        }
-        if res.path == "/main.php/friend/list" {
+        } else if res.path == "/main.php/user/userInfo" {
             
-        }
-        if res.path == "/main.php/user/userInfo" {
+        } else if res.path == "/main.php/user/changeName" {
             
-        }
-        if res.path == "/main.php/user/changeName" {
+        } else if res.path == "/main.php/user/changeNavi" {
             
-        }
-        if res.path == "/main.php/user/changeNavi" {
+        } else if res.path == "/main.php/download/update" {
             
-        }
-        if res.path == "/main.php/download/update" {
+        } else if res.path == "/main.php/download/event" {
             
-        }
-        if res.path == "/main.php/download/event" {
+        } else if res.path == "/main.php/download/additional" {
             
-        }
-        if res.path == "/main.php/download/additional" {
+        } else if res.path == "/main.php/download/batch" {
             
-        }
-        if res.path == "/main.php/download/batch" {
+        } else if res.path == "/main.php/download/getUrl" {
             
-        }
-        if res.path == "/main.php/download/getUrl" {
+        } else if res.path == "/main.php/api" {
             
-        }
-        if res.path == "/main.php/api" {
+        } else if res.path == "/main.php/ranking/live" {
             
-        }
-        if res.path == "/main.php/ranking/live" {
+        } else if res.path == "/main.php/ranking/player" {
             
-        }
-        if res.path == "/main.php/ranking/player" {
+        } else if res.path == "/main.php/unit/deck" {
             
-        }
-        if res.path == "/main.php/unit/deck" {
+        } else if res.path == "/main.php/unit/deckName" {
             
-        }
-        if res.path == "/main.php/unit/deckName" {
+        } else if res.path == "/main.php/unit/setDisplayRank" {
             
-        }
-        if res.path == "/main.php/unit/setDisplayRank" {
+        } else if res.path == "/main.php/live/partyList" {
             
-        }
-        if res.path == "/main.php/live/partyList" {
+        } else if res.path == "/main.php/live/preciseScore" {
             
-        }
-        if res.path == "/main.php/live/preciseScore" {
+        } else if res.path == "/main.php/live/play" {
             
-        }
-        if res.path == "/main.php/live/play" {
+        } else if res.path == "/main.php/live/reward" {
             
-        }
-        if res.path == "/main.php/live/reward" {
+        } else if res.path == "/main.php/notice/noticeFriendGreeting" {
             
-        }
-        if res.path == "/main.php/notice/noticeFriendGreeting" {
+        } else if res.path == "/main.php/notice/noticeFriendVariety" {
             
-        }
-        if res.path == "/main.php/notice/noticeFriendVariety" {
+        } else if res.path == "/main.php/notice/noticeUserGreetingHistory" {
             
-        }
-        if res.path == "/main.php/notice/noticeUserGreetingHistory" {
+        } else if res.path == "/main.php/award/set" {
             
-        }
-        if res.path == "/main.php/award/set" {
+        } else if res.path == "/main.php/background/set" {
             
-        }
-        if res.path == "/main.php/background/set" {
+        } else if res.path == "/main.php/profile/profileRegister" {
             
-        }
-        if res.path == "/main.php/profile/profileRegister" {
+        } else if res.path == "/main.php/area/list" {
             
-        }
-        if res.path == "/main.php/area/list" {
+        } else if res.path == "/main.php/announce/checkState" {
             
-        }
-        if res.path == "/main.php/announce/checkState" {
+        } else if res.path == "/main.php/personalnotice/get" {
             
-        }
-        if res.path == "/main.php/personalnotice/get" {
+        } else if res.path == "/main.php/event/eventList" {
             
-        }
-        if res.path == "/main.php/event/eventList" {
+        } else if res.path == "/main.php/payment/productList" {
             
-        }
-        if res.path == "/main.php/payment/productList" {
+        } else if res.path == "/main.php/payment/month" {
             
-        }
-        if res.path == "/main.php/payment/month" {
+        } else if res.path == "/main.php/exchange/itemInfo" {
             
-        }
-        if res.path == "/main.php/exchange/itemInfo" {
+        } else if res.path == "/main.php/album/seriesAll" {
             
-        }
-        if res.path == "/main.php/album/seriesAll" {
+        } else if res.path == "/main.php/museum/info" {
             
-        }
-        if res.path == "/main.php/museum/info" {
+        } else if res.path == "/main.php/banner/bannerList" {
             
-        }
-        if res.path == "/main.php/banner/bannerList" {
+        } else if res.path == "/main.php/secretbox/pon" {
             
-        }
-        if res.path == "/main.php/secretbox/pon" {
+        } else if res.path == "/main.php/secretbox/multi" {
             
-        }
-        if res.path == "/main.php/secretbox/multi" {
+        } else if res.path == "/main.php/scenario/reward" {
             
-        }
-        if res.path == "/main.php/scenario/reward" {
+        } else if res.path == "/main.php/subscenario/reward" {
             
-        }
-        if res.path == "/main.php/subscenario/reward" {
+        } else if res.path == "/main.php/multiunit/scenarioReward" {
             
-        }
-        if res.path == "/main.php/multiunit/scenarioReward" {
-            
-        }
-        if res.path == "/main.php/reward/rewardHistory" {
+        } else if res.path == "/main.php/reward/rewardHistory" {
             
         }
     }
