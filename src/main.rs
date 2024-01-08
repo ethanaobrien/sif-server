@@ -22,6 +22,7 @@ async fn login_top_info(req: HttpRequest) -> HttpResponse {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    println!("{}", crate::router::userdata::get_uid("person1"));
     use actix_web::{App, HttpServer};
 
     let rv = HttpServer::new(|| App::new()
