@@ -64,7 +64,7 @@ impl LlsifServer {
         }
         res.end();
     }
-    fn post(mut res:Request) {
+    fn post(mut res: Request) {
         //this is not acceptible me
         if res.path == "/main.php/login/authkey" {
             router::login::authkey(res);
