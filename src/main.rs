@@ -61,6 +61,11 @@ async fn tutorial_progress(req: HttpRequest, body: String) -> HttpResponse {
     println!("Request: {}", req.path());
     router::tutorial::progress(req, body)
 }
+#[post("/main.php/api")]
+async fn main_api(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::main::api(req, body)
+}
 
 async fn log_unknown_request(req: HttpRequest) -> HttpResponse {
     println!("Unhandled request: {}", req.path());
@@ -84,6 +89,7 @@ async fn main() -> std::io::Result<()> {
         .service(tos_check)
         .service(tos_agree)
         .service(tutorial_progress)
+        .service(main_api)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();

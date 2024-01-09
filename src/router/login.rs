@@ -10,8 +10,7 @@ pub fn authkey(req: HttpRequest, body: String) -> HttpResponse {
     //let key = "user1";
     
     //let uid = userdata::get_uid(key);
-    let mut token = String::new();
-    general_purpose::STANDARD.encode_string(String::from("okay"), &mut token);
+    let token = general_purpose::STANDARD.encode(String::from("okay"));
     
     let resp = object!{
         "response_data": {
@@ -31,8 +30,6 @@ pub fn start_up(req: HttpRequest, body: String) -> HttpResponse {
     
     let userdata = userdata::get_acc(&key);
     let uid = userdata["user_id"].as_i32().unwrap();
-    let mut token = String::new();
-    general_purpose::STANDARD.encode_string(uid.to_string(), &mut token);
     
     let resp = object!{
         "response_data": {
@@ -51,8 +48,7 @@ pub fn login(req: HttpRequest, body: String) -> HttpResponse {
     
     let userdata = userdata::get_acc(&key);
     let uid = userdata["user_id"].as_i32().unwrap();
-    let mut token = String::new();
-    general_purpose::STANDARD.encode_string(key, &mut token);
+    let token = general_purpose::STANDARD.encode(key);
     
     let resp = object!{
         "response_data": {

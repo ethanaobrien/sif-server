@@ -1,0 +1,45 @@
+[
+    {
+        "unit_deck_id": 1,
+        "main_flag": true,
+        "deck_name": "ユニットA",
+        "unit_owning_user_ids": [
+            {
+                "position": 1,
+                "unit_owning_user_id": 460498708
+            },
+            {
+                "position": 2,
+                "unit_owning_user_id": 460498704
+            },
+            {
+                "position": 3,
+                "unit_owning_user_id": 460498703
+            },
+            {
+                "position": 4,
+                "unit_owning_user_id": 460498718
+            },
+            {
+                "position": 5,
+                "unit_owning_user_id": 460500692
+            },
+            {
+                "position": 6,
+                "unit_owning_user_id": 460498719
+            },
+            {
+                "position": 7,
+                "unit_owning_user_id": 460498716
+            },
+            {
+                "position": 8,
+                "unit_owning_user_id": 460498715
+            },
+            {
+                "position": 9,
+                "unit_owning_user_id": 460498714
+            }
+        ]
+    }
+]
