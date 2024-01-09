@@ -5,7 +5,6 @@ use json::object;
 use actix_web::{HttpResponse, HttpRequest};
 
 pub fn authkey(req: HttpRequest, body: String) -> HttpResponse {
-    println!("authkey");
     let body = global::process_body(body);
     
     //let key = "user1";
@@ -27,7 +26,6 @@ pub fn authkey(req: HttpRequest, body: String) -> HttpResponse {
 }
 
 pub fn start_up(req: HttpRequest, body: String) -> HttpResponse {
-    println!("startup");
     let body = global::process_body(body);
     let key = body["devtoken"].to_string().replace(":", "");
     
@@ -48,7 +46,6 @@ pub fn start_up(req: HttpRequest, body: String) -> HttpResponse {
 }
 
 pub fn login(req: HttpRequest, body: String) -> HttpResponse {
-    println!("login");
     let body = global::process_body(body);
     let key = body["devtoken"].to_string().replace(":", "");
     
@@ -74,7 +71,6 @@ pub fn login(req: HttpRequest, body: String) -> HttpResponse {
 }
 
 pub fn top_info(req: HttpRequest, body: String) -> HttpResponse {
-    println!("topinfo");
     let body = global::process_body(body);
     let key = body["devtoken"].to_string().replace(":", "");
     let userdata = userdata::get_acc(&key);

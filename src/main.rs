@@ -1,3 +1,4 @@
+#![recursion_limit = "256"]
 mod router;
 use actix_web::{post, get};
 use actix_web::HttpResponse;
@@ -7,19 +8,38 @@ use actix_web::web;
 
 #[post("/main.php/login/authkey")]
 async fn login_authkey(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
     router::login::authkey(req, body)
 }
 #[post("/main.php/login/startUp")]
 async fn login_start_up(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
     router::login::start_up(req, body)
 }
 #[post("/main.php/login/login")]
 async fn login_login(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
     router::login::login(req, body)
 }
 #[post("/main.php/login/topInfo")]
 async fn login_top_info(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
     router::login::top_info(req, body)
+}
+#[post("/main.php/user/userInfo")]
+async fn user_user_info(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::user::user_info(req, body)
+}
+#[post("/main.php/gdpr/get")]
+async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::gdpr::get(req, body)
+}
+#[post("/main.php/lbonus/execute")]
+async fn lbonus_execute(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::user::lbonus_execute(req, body)
 }
 async fn log_unknown_request(req: HttpRequest) -> HttpResponse {
     println!("Unhandled request: {}", req.path());
@@ -36,6 +56,9 @@ async fn main() -> std::io::Result<()> {
         .service(login_start_up)
         .service(login_login)
         .service(login_top_info)
+        .service(user_user_info)
+        .service(gdpr_get)
+        .service(lbonus_execute)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
