@@ -43,8 +43,7 @@ pub fn sign(req: &HttpRequest, body: &str) -> HttpResponseBuilder {
     //return rv;
 }
 
-//pub fn read_body(req: &mut Request) -> json::JsonValue {
-//    let body = req.read_all_string();
-//    let result = body.split("\n").collect::<Vec<_>>()[3].split("\n").collect::<Vec<_>>()[0];
-//    return json::parse(result).unwrap_or(object!{});
-//}
+pub fn process_body(body: String) -> json::JsonValue {
+    let result = body.split("\r\n\r\n").collect::<Vec<_>>()[1].split("\r\n").collect::<Vec<_>>()[0];
+    return json::parse(result).unwrap_or(object!{});
+}

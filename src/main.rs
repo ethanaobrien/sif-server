@@ -1,35 +1,42 @@
 mod router;
-use actix_web::post;
+use actix_web::{post, get};
 use actix_web::HttpResponse;
 use actix_web::HttpRequest;
+use actix_web::Responder;
+use actix_web::web;
 
 #[post("/main.php/login/authkey")]
-async fn login_authkey(req: HttpRequest) -> HttpResponse {
-    router::login::authkey(req)
+async fn login_authkey(req: HttpRequest, body: String) -> HttpResponse {
+    router::login::authkey(req, body)
 }
 #[post("/main.php/login/startUp")]
-async fn login_start_up(req: HttpRequest) -> HttpResponse {
-    router::login::start_up(req)
+async fn login_start_up(req: HttpRequest, body: String) -> HttpResponse {
+    router::login::start_up(req, body)
 }
 #[post("/main.php/login/login")]
-async fn login_login(req: HttpRequest) -> HttpResponse {
-    router::login::login(req)
+async fn login_login(req: HttpRequest, body: String) -> HttpResponse {
+    router::login::login(req, body)
 }
 #[post("/main.php/login/topInfo")]
-async fn login_top_info(req: HttpRequest) -> HttpResponse {
-    router::login::top_info(req)
+async fn login_top_info(req: HttpRequest, body: String) -> HttpResponse {
+    router::login::top_info(req, body)
+}
+async fn log_unknown_request(req: HttpRequest) -> HttpResponse {
+    println!("Unhandled request: {}", req.path());
+    HttpResponse::Ok().body("ok")
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("{}", crate::router::userdata::get_uid("person1"));
+    //println!("{}", crate::router::userdata::get_uid("person1"));
     use actix_web::{App, HttpServer};
 
     let rv = HttpServer::new(|| App::new()
         .service(login_authkey)
         .service(login_start_up)
         .service(login_login)
-        .service(login_top_info))
+        .service(login_top_info)
+        .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
     println!("Server started: http://127.0.0.1:{}", 8080);

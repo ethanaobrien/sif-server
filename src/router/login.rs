@@ -4,21 +4,20 @@ use crate::router::userdata;
 use json::object;
 use actix_web::{HttpResponse, HttpRequest};
 
-pub fn authkey(req: HttpRequest) -> HttpResponse {
-    //let body = global::read_body(&mut req);
-    //println!("{}", body);
+pub fn authkey(req: HttpRequest, body: String) -> HttpResponse {
     println!("authkey");
+    let body = global::process_body(body);
     
-    let key = "user1";
+    //let key = "user1";
     
-    let uid = userdata::get_uid(key);
+    //let uid = userdata::get_uid(key);
     let mut token = String::new();
-    general_purpose::STANDARD.encode_string(uid.to_string(), &mut token);
+    general_purpose::STANDARD.encode_string(String::from("okay"), &mut token);
     
     let resp = object!{
         "response_data": {
-            "authorize_token": token//,
-        //    "dummy_token": body["dummy_token"].clone()
+            "authorize_token": token,
+            "dummy_token": body["dummy_token"].to_string()
         },
         "release_info": global::release_info(),
         "status_code":200
@@ -27,13 +26,13 @@ pub fn authkey(req: HttpRequest) -> HttpResponse {
     global::sign(&req, &body).body(body)
 }
 
-pub fn start_up(req: HttpRequest) -> HttpResponse {
-    //let body = global::read_body(&mut req);
+pub fn start_up(req: HttpRequest, body: String) -> HttpResponse {
     println!("startup");
+    let body = global::process_body(body);
+    let key = body["devtoken"].to_string().replace(":", "");
     
-    let key = "user1";
-    
-    let uid = userdata::get_uid(key);
+    let userdata = userdata::get_acc(&key);
+    let uid = userdata["user_id"].as_i32().unwrap();
     let mut token = String::new();
     general_purpose::STANDARD.encode_string(uid.to_string(), &mut token);
     
@@ -48,16 +47,15 @@ pub fn start_up(req: HttpRequest) -> HttpResponse {
     global::sign(&req, &body).body(body)
 }
 
-pub fn login(req: HttpRequest) -> HttpResponse {
-    //let body = global::read_body(&mut req);
-    //println!("{}", body);
+pub fn login(req: HttpRequest, body: String) -> HttpResponse {
     println!("login");
+    let body = global::process_body(body);
+    let key = body["devtoken"].to_string().replace(":", "");
     
-    let key = "user1";
-    
-    let uid = userdata::get_uid(key);
+    let userdata = userdata::get_acc(&key);
+    let uid = userdata["user_id"].as_i32().unwrap();
     let mut token = String::new();
-    general_purpose::STANDARD.encode_string(uid.to_string(), &mut token);
+    general_purpose::STANDARD.encode_string(key, &mut token);
     
     let resp = object!{
         "response_data": {
@@ -69,48 +67,20 @@ pub fn login(req: HttpRequest) -> HttpResponse {
             "skip_login_news":true
         },
         "release_info": global::release_info(),
-        "status_code":200
+        "status_code": 200
     };
     let body = json::stringify(resp);
     global::sign(&req, &body).body(body)
 }
 
-pub fn top_info(req: HttpRequest) -> HttpResponse {
+pub fn top_info(req: HttpRequest, body: String) -> HttpResponse {
     println!("topinfo");
+    let body = global::process_body(body);
+    let key = body["devtoken"].to_string().replace(":", "");
+    let userdata = userdata::get_acc(&key);
+    
     let resp = object!{
-        "response_data":  {
-            friend_action_cnt: 0,//1291,
-            friend_greet_cnt: 0,
-            friend_variety_cnt: 0,//1289,
-            friend_new_cnt: 0,
-            present_cnt: 0,
-            secret_box_badge_flag: false,
-            server_datetime: "",
-            server_timestamp: global::timestamp(),
-            notice_friend_datetime: "",
-            notice_mail_datetime: "2019-12-22 13:03:23",
-            friends_approval_wait_cnt: 0,
-            friends_request_cnt: 0,
-            is_today_birthday: false,
-            license_info: {
-                license_list: [],
-                licensed_info: [],
-                expired_info: [],
-                badge_flag: false
-            },
-            using_buff_info: [],
-            is_klab_id_task_flag: false,
-            klab_id_task_can_sync: false,
-            has_unread_announce: false, // true,
-            live_skip_open_flag: true,
-            exchange_badge_cnt: [
-                493,
-                12,
-                345
-            ],
-            ad_flag: true,
-            has_ad_reward: true
-        },
+        "response_data": userdata["user_data"].clone(),
         "release_info": global::release_info(),
         "status_code":200
     };
