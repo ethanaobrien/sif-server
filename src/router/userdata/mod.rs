@@ -170,3 +170,14 @@ pub fn get_acc(device_info: &str) -> JsonValue {
     return userdata;
     //return userdata["user_id"].as_i32().unwrap();
 }
+
+pub fn save_acc(device_info: &str, data: JsonValue) {
+    let key = &format!("_{}_", device_info[0..20].to_lowercase());
+    let mut engine = ENGINE.lock().unwrap();
+    if engine.is_none() { init(&mut engine); };
+    let conn = engine.as_ref().unwrap();
+    if !acc_exists(conn, key) {
+        create_acc(conn, key);
+    }
+    store_data(conn, key, data);
+}

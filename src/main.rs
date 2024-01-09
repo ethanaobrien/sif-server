@@ -31,6 +31,11 @@ async fn user_user_info(req: HttpRequest, body: String) -> HttpResponse {
     println!("Request: {}", req.path());
     router::user::user_info(req, body)
 }
+#[post("/main.php/user/changeName")]
+async fn user_change_name(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::user::change_name(req, body)
+}
 #[post("/main.php/gdpr/get")]
 async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse {
     println!("Request: {}", req.path());
@@ -41,6 +46,22 @@ async fn lbonus_execute(req: HttpRequest, body: String) -> HttpResponse {
     println!("Request: {}", req.path());
     router::user::lbonus_execute(req, body)
 }
+#[post("/main.php/tos/tosCheck")]
+async fn tos_check(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::user::tos(req, body)
+}
+#[post("/main.php/tos/tosAgree")]
+async fn tos_agree(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::user::tos(req, body)
+}
+#[post("/main.php/tutorial/progress")]
+async fn tutorial_progress(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::tutorial::progress(req, body)
+}
+
 async fn log_unknown_request(req: HttpRequest) -> HttpResponse {
     println!("Unhandled request: {}", req.path());
     HttpResponse::Ok().body("ok")
@@ -57,8 +78,12 @@ async fn main() -> std::io::Result<()> {
         .service(login_login)
         .service(login_top_info)
         .service(user_user_info)
+        .service(user_change_name)
         .service(gdpr_get)
         .service(lbonus_execute)
+        .service(tos_check)
+        .service(tos_agree)
+        .service(tutorial_progress)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
