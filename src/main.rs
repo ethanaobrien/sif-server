@@ -1,10 +1,13 @@
 #![recursion_limit = "256"]
 mod router;
-use actix_web::{post, get};
-use actix_web::HttpResponse;
-use actix_web::HttpRequest;
-use actix_web::web;
-use actix_web::dev::Service;
+use actix_web::{
+    post,
+    get,
+    HttpResponse,
+    HttpRequest,
+    web,
+    dev::Service
+};
 
 #[post("/main.php/login/authkey")]
 async fn login_authkey(req: HttpRequest, body: String) -> HttpResponse { router::login::authkey(req, body) }

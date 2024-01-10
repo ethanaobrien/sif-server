@@ -1,13 +1,18 @@
 use base64::{Engine as _, engine::general_purpose};
-use openssl::rsa::Rsa;
-use openssl::sign::Signer;
-use openssl::pkey::PKey;
-use openssl::hash::MessageDigest;
+use openssl::{
+    rsa::Rsa,
+    sign::Signer,
+    pkey::PKey,
+    hash::MessageDigest
+};
 use std::time::{SystemTime, UNIX_EPOCH};
 use json::{array, object};
-use actix_web::{HttpResponse, HttpRequest};
-use actix_web::http::header::HeaderValue;
-use actix_web::HttpResponseBuilder;
+use actix_web::{
+    HttpResponse,
+    HttpRequest,
+    HttpResponseBuilder,
+    http::header::HeaderValue
+};
 
 pub fn release_info() -> json::JsonValue {
     return array![{"id":423,"key":"UDKkj/dmBRbz+CIB+Ekqyg=="},{"id":1870,"key":"Lckl38UoH8CfOMqMSmMYsA=="},{"id":1871,"key":"acAmAWyPOCrO+R5qY9UTtQ=="},{"id":1872,"key":"LaLzU62pKnTftSEGFhMqfA=="},{"id":1873,"key":"wiaaGZSJexvY0u4poRrGSw=="}]

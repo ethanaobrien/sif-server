@@ -1,7 +1,6 @@
 use crate::router::global;
 use json::object;
-use actix_web::{HttpResponse, HttpRequest};
-use actix_web::http::header::HeaderValue;
+use actix_web::{HttpResponse, HttpRequest, http::header::HeaderValue};
 use json::array;
 use std::fs;
 

@@ -1,6 +1,5 @@
 use base64::{Engine as _, engine::general_purpose};
-use crate::router::global;
-use crate::router::userdata;
+use crate::router::{global, userdata};
 use json::object;
 use actix_web::{HttpResponse, HttpRequest};
 

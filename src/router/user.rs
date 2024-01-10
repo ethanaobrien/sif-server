@@ -1,9 +1,7 @@
 use base64::{Engine as _, engine::general_purpose};
-use crate::router::global;
-use crate::router::userdata;
+use crate::router::{global, userdata};
 use json::object;
-use actix_web::{HttpResponse, HttpRequest};
-use actix_web::http::header::HeaderValue;
+use actix_web::{HttpResponse, HttpRequest, http::header::HeaderValue};
 
 pub fn user_info(req: HttpRequest, _body: String) -> HttpResponse {
     //let body = global::process_body(body);

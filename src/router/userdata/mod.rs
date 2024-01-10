@@ -1,6 +1,5 @@
 use rusqlite::{Connection, params};
-use std::sync::Mutex;
-use std::sync::MutexGuard;
+use std::sync::{Mutex, MutexGuard};
 use lazy_static::lazy_static;
 use json::{object, JsonValue, array};
 use chrono::{Utc, DateTime};
