@@ -48,74 +48,74 @@ lazy_static! {
     ];
 }
 
-fn live() -> JsonValue {
-    object!{}
+fn live() -> Option<JsonValue> {
+    None
 }
-fn unit() -> JsonValue {
-    object!{}
+fn unit() -> Option<JsonValue> {
+    None
 }
-fn costume() -> JsonValue {
-    object!{}
+fn costume() -> Option<JsonValue> {
+    None
 }
-fn album() -> JsonValue {
-    object!{}
+fn album() -> Option<JsonValue> {
+    None
 }
-fn scenario() -> JsonValue {
-    object!{}
+fn scenario() -> Option<JsonValue> {
+    None
 }
-fn subscenario() -> JsonValue {
-    object!{}
+fn subscenario() -> Option<JsonValue> {
+    None
 }
-fn eventscenario() -> JsonValue {
-    object!{}
+fn eventscenario() -> Option<JsonValue> {
+    None
 }
-fn multiunit() -> JsonValue {
-    object!{}
+fn multiunit() -> Option<JsonValue> {
+    None
 }
-fn payment() -> JsonValue {
-    object!{}
+fn payment() -> Option<JsonValue> {
+    None
 }
-fn banner() -> JsonValue {
-    object!{}
+fn banner() -> Option<JsonValue> {
+    None
 }
-fn notice() -> JsonValue {
-    object!{}
+fn notice() -> Option<JsonValue> {
+    None
 }
-fn user() -> JsonValue {
-    object!{}
+fn user() -> Option<JsonValue> {
+    None
 }
-fn navigation() -> JsonValue {
-    object!{}
+fn navigation() -> Option<JsonValue> {
+    None
 }
-fn award() -> JsonValue {
-    object!{}
+fn award() -> Option<JsonValue> {
+    None
 }
-fn background() -> JsonValue {
-    object!{}
+fn background() -> Option<JsonValue> {
+    None
 }
-fn stamp() -> JsonValue {
-    object!{}
+fn stamp() -> Option<JsonValue> {
+    None
 }
-fn exchange() -> JsonValue {
-    object!{}
+fn exchange() -> Option<JsonValue> {
+    None
 }
-fn livese() -> JsonValue {
-    object!{}
+fn livese() -> Option<JsonValue> {
+    None
 }
-fn liveicon() -> JsonValue {
-    object!{}
+fn liveicon() -> Option<JsonValue> {
+    None
 }
-fn item() -> JsonValue {
-    object!{}
+fn item() -> Option<JsonValue> {
+    None
 }
-fn marathon() -> JsonValue {
-    object!{}
+fn marathon() -> Option<JsonValue> {
+    None
 }
-fn challenge() -> JsonValue {
-    object!{}
+fn challenge() -> Option<JsonValue> {
+    None
 }
-fn login() -> JsonValue {
-    object!{}
+fn login() -> Option<JsonValue> {
+    None
 }
 
 pub fn api(req: HttpRequest, body: String) -> HttpResponse {
@@ -141,31 +141,33 @@ pub fn api(req: HttpRequest, body: String) -> HttpResponse {
             }
             resp_data.push(json::parse(&STATIC_RESPONSE_DATA[index].to_string()).unwrap()).unwrap();
         }
+        if let Some(d) = live() { resp_data.push(d).unwrap(); }
         
+        //messy
         match data["module"].as_str().unwrap() {
-            "live" => { resp_data.push(live()).unwrap(); },
-            "unit" => { resp_data.push(unit()).unwrap(); },
-            "costume" => { resp_data.push(costume()).unwrap(); },
-            "album" => { resp_data.push(album()).unwrap(); },
-            "scenario" => { resp_data.push(scenario()).unwrap(); },
-            "subscenario" => { resp_data.push(subscenario()).unwrap(); },
-            "eventscenario" => { resp_data.push(eventscenario()).unwrap(); },
-            "multiunit" => { resp_data.push(multiunit()).unwrap(); },
-            "payment" => { resp_data.push(payment()).unwrap(); },
-            "banner" => { resp_data.push(banner()).unwrap(); },
-            "notice" => { resp_data.push(notice()).unwrap(); },
-            "user" => { resp_data.push(user()).unwrap(); },
-            "navigation" => { resp_data.push(navigation()).unwrap(); },
-            "award" => { resp_data.push(award()).unwrap(); },
-            "background" => { resp_data.push(background()).unwrap(); },
-            "stamp" => { resp_data.push(stamp()).unwrap(); },
-            "exchange" => { resp_data.push(exchange()).unwrap(); },
-            "livese" => { resp_data.push(livese()).unwrap(); },
-            "liveicon" => { resp_data.push(liveicon()).unwrap(); },
-            "item" => { resp_data.push(item()).unwrap(); },
-            "marathon" => { resp_data.push(marathon()).unwrap(); },
-            "challenge" => { resp_data.push(challenge()).unwrap(); },
-            "login" => { resp_data.push(login()).unwrap(); },
+            "live" => { if let Some(d) = live() { resp_data.push(d).unwrap(); } },
+            "unit" => { if let Some(d) = unit() { resp_data.push(d).unwrap(); } },
+            "costume" => { if let Some(d) = costume() { resp_data.push(d).unwrap(); } },
+            "album" => { if let Some(d) = album() { resp_data.push(d).unwrap(); } },
+            "scenario" => { if let Some(d) = scenario() { resp_data.push(d).unwrap(); } },
+            "subscenario" => { if let Some(d) = subscenario() { resp_data.push(d).unwrap(); } },
+            "eventscenario" => { if let Some(d) = eventscenario() { resp_data.push(d).unwrap(); } },
+            "multiunit" => { if let Some(d) = multiunit() { resp_data.push(d).unwrap(); } },
+            "payment" => { if let Some(d) = payment() { resp_data.push(d).unwrap(); } },
+            "banner" => { if let Some(d) = banner() { resp_data.push(d).unwrap(); } },
+            "notice" => { if let Some(d) = notice() { resp_data.push(d).unwrap(); } },
+            "user" => { if let Some(d) = user() { resp_data.push(d).unwrap(); } },
+            "navigation" => { if let Some(d) = navigation() { resp_data.push(d).unwrap(); } },
+            "award" => { if let Some(d) = award() { resp_data.push(d).unwrap(); } },
+            "background" => { if let Some(d) = background() { resp_data.push(d).unwrap(); } },
+            "stamp" => { if let Some(d) = stamp() { resp_data.push(d).unwrap(); } },
+            "exchange" => { if let Some(d) = exchange() { resp_data.push(d).unwrap(); } },
+            "livese" => { if let Some(d) = livese() { resp_data.push(d).unwrap(); } },
+            "liveicon" => { if let Some(d) = liveicon() { resp_data.push(d).unwrap(); } },
+            "item" => { if let Some(d) = item() { resp_data.push(d).unwrap(); } },
+            "marathon" => { if let Some(d) = marathon() { resp_data.push(d).unwrap(); } },
+            "challenge" => { if let Some(d) = challenge() { resp_data.push(d).unwrap(); } },
+            "login" => { if let Some(d) = login() { resp_data.push(d).unwrap(); } },
             _ => {
                 println!("Unhandled main api {}", data["module"]);
             }
