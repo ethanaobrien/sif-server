@@ -1,11 +1,8 @@
-use base64::{Engine as _, engine::general_purpose};
 use crate::router::global;
-use crate::router::userdata;
 use json::object;
 use actix_web::{HttpResponse, HttpRequest};
-use actix_web::http::header::HeaderValue;
 
-pub fn get(req: HttpRequest, body: String) -> HttpResponse {
+pub fn get(req: HttpRequest, _body: String) -> HttpResponse {
     let resp = object!{
         "response_data": {
             enable_gdpr: true,

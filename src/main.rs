@@ -3,7 +3,6 @@ mod router;
 use actix_web::{post, get};
 use actix_web::HttpResponse;
 use actix_web::HttpRequest;
-use actix_web::Responder;
 use actix_web::web;
 use actix_web::dev::Service;
 
@@ -59,7 +58,7 @@ async fn download_batch(req: HttpRequest, body: String) -> HttpResponse { router
 async fn download_get_url(req: HttpRequest, body: String) -> HttpResponse { router::download::get_url(req, body) }
 
 #[get("/server_info.zip")]
-async fn server_info(req: HttpRequest) -> HttpResponse {
+async fn server_info() -> HttpResponse {
     HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
 }
 
@@ -102,111 +101,3 @@ async fn main() -> std::io::Result<()> {
     println!("Server started: http://127.0.0.1:{}", 8080);
     rv.await
 }
-
-/*
-    fn post(mut res: Request) {
-        //this is not acceptible me
-        if res.path == "/" {
-            router::login::authkey(res);
-        } else if res.path == "/main.php/login/startUp" {
-            router::login::start_up(res);
-        } else if res.path == "/main.php/login/login" {
-            router::login::login(res);
-        } else if res.path == "/main.php/login/topInfo" {
-            router::login::top_info(res);
-        } else if res.path.starts_with("/main.php/tos/") {
-            
-        } else if res.path.starts_with("/main.php/gdpr/") {
-            
-        } else if res.path.starts_with("/main.php/tutorial/") {
-            
-        } else if res.path == "/main.php/lbonus/execute" {
-            
-        } else if res.path == "/main.php/handover/kidStatus" {
-            
-        } else if res.path == "/main.php/friend/list" {
-            
-        } else if res.path == "/main.php/user/userInfo" {
-            
-        } else if res.path == "/main.php/user/changeName" {
-            
-        } else if res.path == "/main.php/user/changeNavi" {
-            
-        } else if res.path == "/main.php/download/update" {
-            
-        } else if res.path == "/main.php/download/event" {
-            
-        } else if res.path == "/main.php/download/additional" {
-            
-        } else if res.path == "/main.php/download/batch" {
-            
-        } else if res.path == "/main.php/download/getUrl" {
-            
-        } else if res.path == "/main.php/api" {
-            
-        } else if res.path == "/main.php/ranking/live" {
-            
-        } else if res.path == "/main.php/ranking/player" {
-            
-        } else if res.path == "/main.php/unit/deck" {
-            
-        } else if res.path == "/main.php/unit/deckName" {
-            
-        } else if res.path == "/main.php/unit/setDisplayRank" {
-            
-        } else if res.path == "/main.php/live/partyList" {
-            
-        } else if res.path == "/main.php/live/preciseScore" {
-            
-        } else if res.path == "/main.php/live/play" {
-            
-        } else if res.path == "/main.php/live/reward" {
-            
-        } else if res.path == "/main.php/notice/noticeFriendGreeting" {
-            
-        } else if res.path == "/main.php/notice/noticeFriendVariety" {
-            
-        } else if res.path == "/main.php/notice/noticeUserGreetingHistory" {
-            
-        } else if res.path == "/main.php/award/set" {
-            
-        } else if res.path == "/main.php/background/set" {
-            
-        } else if res.path == "/main.php/profile/profileRegister" {
-            
-        } else if res.path == "/main.php/area/list" {
-            
-        } else if res.path == "/main.php/announce/checkState" {
-            
-        } else if res.path == "/main.php/personalnotice/get" {
-            
-        } else if res.path == "/main.php/event/eventList" {
-            
-        } else if res.path == "/main.php/payment/productList" {
-            
-        } else if res.path == "/main.php/payment/month" {
-            
-        } else if res.path == "/main.php/exchange/itemInfo" {
-            
-        } else if res.path == "/main.php/album/seriesAll" {
-            
-        } else if res.path == "/main.php/museum/info" {
-            
-        } else if res.path == "/main.php/banner/bannerList" {
-            
-        } else if res.path == "/main.php/secretbox/pon" {
-            
-        } else if res.path == "/main.php/secretbox/multi" {
-            
-        } else if res.path == "/main.php/scenario/reward" {
-            
-        } else if res.path == "/main.php/subscenario/reward" {
-            
-        } else if res.path == "/main.php/multiunit/scenarioReward" {
-            
-        } else if res.path == "/main.php/reward/rewardHistory" {
-            
-        }
-    }
-}
-*/
