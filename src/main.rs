@@ -67,6 +67,38 @@ async fn main_api(req: HttpRequest, body: String) -> HttpResponse {
     router::main::api(req, body)
 }
 
+#[post("/main.php/download/update")]
+async fn download_update(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::download::update(req, body)
+}
+#[post("/main.php/download/event")]
+async fn download_event(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::download::event(req, body)
+}
+#[post("/main.php/download/additional")]
+async fn download_additional(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::download::additional(req, body)
+}
+#[post("/main.php/download/batch")]
+async fn download_batch(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::download::batch(req, body)
+}
+#[post("/main.php/download/getUrl")]
+async fn download_get_url(req: HttpRequest, body: String) -> HttpResponse {
+    println!("Request: {}", req.path());
+    router::download::get_url(req, body)
+}
+
+#[get("/server_info.zip")]
+async fn server_info(req: HttpRequest) -> HttpResponse {
+    println!("Request: {}", req.path());
+    HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
+}
+
 async fn log_unknown_request(req: HttpRequest) -> HttpResponse {
     println!("Unhandled request: {}", req.path());
     HttpResponse::Ok().body("ok")
@@ -90,6 +122,12 @@ async fn main() -> std::io::Result<()> {
         .service(tos_agree)
         .service(tutorial_progress)
         .service(main_api)
+        .service(download_update)
+        .service(download_event)
+        .service(download_additional)
+        .service(download_batch)
+        .service(download_get_url)
+        .service(server_info)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
