@@ -5,97 +5,61 @@ use actix_web::HttpResponse;
 use actix_web::HttpRequest;
 use actix_web::Responder;
 use actix_web::web;
+use actix_web::dev::Service;
 
 #[post("/main.php/login/authkey")]
-async fn login_authkey(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::login::authkey(req, body)
-}
+async fn login_authkey(req: HttpRequest, body: String) -> HttpResponse { router::login::authkey(req, body) }
+
 #[post("/main.php/login/startUp")]
-async fn login_start_up(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::login::start_up(req, body)
-}
+async fn login_start_up(req: HttpRequest, body: String) -> HttpResponse { router::login::start_up(req, body) }
+
 #[post("/main.php/login/login")]
-async fn login_login(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::login::login(req, body)
-}
+async fn login_login(req: HttpRequest, body: String) -> HttpResponse { router::login::login(req, body) }
+
 #[post("/main.php/login/topInfo")]
-async fn login_top_info(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::login::top_info(req, body)
-}
+async fn login_top_info(req: HttpRequest, body: String) -> HttpResponse { router::login::top_info(req, body) }
+
 #[post("/main.php/user/userInfo")]
-async fn user_user_info(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::user::user_info(req, body)
-}
+async fn user_user_info(req: HttpRequest, body: String) -> HttpResponse { router::user::user_info(req, body) }
+
 #[post("/main.php/user/changeName")]
-async fn user_change_name(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::user::change_name(req, body)
-}
+async fn user_change_name(req: HttpRequest, body: String) -> HttpResponse { router::user::change_name(req, body) }
+
 #[post("/main.php/gdpr/get")]
-async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::gdpr::get(req, body)
-}
+async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse { router::gdpr::get(req, body) }
+
 #[post("/main.php/lbonus/execute")]
-async fn lbonus_execute(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::user::lbonus_execute(req, body)
-}
+async fn lbonus_execute(req: HttpRequest, body: String) -> HttpResponse { router::user::lbonus_execute(req, body) }
+
 #[post("/main.php/tos/tosCheck")]
-async fn tos_check(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::user::tos(req, body)
-}
+async fn tos_check(req: HttpRequest, body: String) -> HttpResponse { router::user::tos(req, body) }
+
 #[post("/main.php/tos/tosAgree")]
-async fn tos_agree(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::user::tos(req, body)
-}
+async fn tos_agree(req: HttpRequest, body: String) -> HttpResponse { router::user::tos(req, body) }
+
 #[post("/main.php/tutorial/progress")]
-async fn tutorial_progress(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::tutorial::progress(req, body)
-}
+async fn tutorial_progress(req: HttpRequest, body: String) -> HttpResponse { router::tutorial::progress(req, body) }
+
 #[post("/main.php/api")]
-async fn main_api(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::main::api(req, body)
-}
+async fn main_api(req: HttpRequest, body: String) -> HttpResponse { router::main::api(req, body) }
 
 #[post("/main.php/download/update")]
-async fn download_update(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::download::update(req, body)
-}
+async fn download_update(req: HttpRequest, body: String) -> HttpResponse { router::download::update(req, body) }
+
 #[post("/main.php/download/event")]
-async fn download_event(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::download::event(req, body)
-}
+async fn download_event(req: HttpRequest, body: String) -> HttpResponse { router::download::event(req, body) }
+
 #[post("/main.php/download/additional")]
-async fn download_additional(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::download::additional(req, body)
-}
+async fn download_additional(req: HttpRequest, body: String) -> HttpResponse { router::download::additional(req, body) }
+
 #[post("/main.php/download/batch")]
-async fn download_batch(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::download::batch(req, body)
-}
+async fn download_batch(req: HttpRequest, body: String) -> HttpResponse { router::download::batch(req, body) }
+
 #[post("/main.php/download/getUrl")]
-async fn download_get_url(req: HttpRequest, body: String) -> HttpResponse {
-    println!("Request: {}", req.path());
-    router::download::get_url(req, body)
-}
+async fn download_get_url(req: HttpRequest, body: String) -> HttpResponse { router::download::get_url(req, body) }
 
 #[get("/server_info.zip")]
 async fn server_info(req: HttpRequest) -> HttpResponse {
-    println!("Request: {}", req.path());
     HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
 }
 
@@ -110,6 +74,10 @@ async fn main() -> std::io::Result<()> {
     use actix_web::{App, HttpServer};
 
     let rv = HttpServer::new(|| App::new()
+        .wrap_fn(|req, srv| {
+            println!("Request: {}", req.path());
+            srv.call(req)
+        })
         .service(login_authkey)
         .service(login_start_up)
         .service(login_login)
