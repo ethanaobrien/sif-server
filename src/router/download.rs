@@ -66,10 +66,8 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     let data = json::parse(&fs::read_to_string(path).unwrap()).unwrap();
     for (index, data) in data.members().enumerate() {
         let url = data["url"].to_string().replace(OFFICIAL_DOMAIN, DOMAIN);
-        let fn1 = url.split("/").collect::<Vec<_>>();
-        let fn1 = fn1.iter().rev().collect::<Vec<_>>()[0];
-        let fn2 = url.split("?").collect::<Vec<_>>()[0];
-        let fn2 = fn2.split(".").collect::<Vec<_>>()[0];
+        let fn1 = url.split('/').last().unwrap_or("");
+        let fn2 = fn1.split('?').next().unwrap_or("").split('.').next().unwrap_or("");
         if blacklist.contains(fn2) {
             continue;
         }
