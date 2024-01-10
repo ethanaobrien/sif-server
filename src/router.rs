@@ -6,3 +6,4 @@ pub mod main;
 pub mod login;
 pub mod download;
 pub mod userdata;
+pub mod misc;

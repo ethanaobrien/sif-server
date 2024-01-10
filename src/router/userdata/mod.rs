@@ -120,7 +120,7 @@ fn create_acc(conn: &Connection, key: &str) {
         },
         user_info: {
             "user": {
-                "user_id": 58969696,
+                "user_id": fully_random_uid,
                 "name": "030",
                 "level": 237,
                 "exp": 779537,
@@ -149,7 +149,79 @@ fn create_acc(conn: &Connection, key: &str) {
             },
             "ad_status": true,
             "server_timestamp": ""
-        }
+        },
+        live_status: json::parse(include_str!("../../../assets/liveStatus.json")).unwrap(),
+        unit_all: json::parse(include_str!("../../../assets/unitAll.json")).unwrap(),
+        deck_info: [
+            {
+                "unit_deck_id": 1,
+                "main_flag": true,
+                "deck_name": "ユニットA",
+                "unit_owning_user_ids": [
+                    {
+                        "position": 1,
+                        "unit_owning_user_id": 460498708
+                    },
+                    {
+                        "position": 2,
+                        "unit_owning_user_id": 460498704
+                    },
+                    {
+                        "position": 3,
+                        "unit_owning_user_id": 460498703
+                    },
+                    {
+                        "position": 4,
+                        "unit_owning_user_id": 460498718
+                    },
+                    {
+                        "position": 5,
+                        "unit_owning_user_id": 460500692
+                    },
+                    {
+                        "position": 6,
+                        "unit_owning_user_id": 460498719
+                    },
+                    {
+                        "position": 7,
+                        "unit_owning_user_id": 460498716
+                    },
+                    {
+                        "position": 8,
+                        "unit_owning_user_id": 460498715
+                    },
+                    {
+                        "position": 9,
+                        "unit_owning_user_id": 460498714
+                    }
+                ]
+            }
+        ],
+        login_top_info: {
+            new_achievement_cnt: 0,
+            unaccomplished_achievement_cnt: 0,
+            live_daily_reward_exist: false,
+            training_energy: 69,
+            training_energy_max: 69,
+            notification: {
+                push: false,
+                lp: false,
+                update_info: false,
+                campaign: false,
+                live: false,
+                lbonus: false,
+                event: false,
+                secretbox: false,
+                birthday: false
+            },
+            open_arena: false,// true,
+            costume_status: false,
+            open_accessory: false,
+            arena_si_skill_unique_check: false, // true,
+            open_v98: false
+        },
+        bg_id: 149,
+        award_id: 10011
     });
 }
 
@@ -179,4 +251,16 @@ pub fn save_acc(device_info: &str, data: JsonValue) {
         create_acc(conn, key);
     }
     store_data(conn, key, data);
+}
+
+pub fn get_unitall(data: JsonValue) -> JsonValue{
+    let mut rv = object!{
+        active: [],
+        waiting: []
+    };
+    
+    for (_i, data) in data.members().enumerate() {
+        rv["active"].push(data.clone()).unwrap();
+    }
+    return rv;
 }

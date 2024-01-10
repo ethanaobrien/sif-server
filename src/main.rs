@@ -60,6 +60,12 @@ async fn download_batch(req: HttpRequest, body: String) -> HttpResponse { router
 #[post("/main.php/download/getUrl")]
 async fn download_get_url(req: HttpRequest, body: String) -> HttpResponse { router::download::get_url(req, body) }
 
+#[post("/main.php/personalnotice/get")]
+async fn personalnotice_get(req: HttpRequest, body: String) -> HttpResponse { router::misc::personalnotice_get(req, body) }
+
+#[post("/main.php/handover/kidStatus")]
+async fn handover_kidstatus(req: HttpRequest, body: String) -> HttpResponse { router::misc::handover_kidstatus(req, body) }
+
 #[get("/server_info.zip")]
 async fn server_info() -> HttpResponse {
     HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
@@ -98,6 +104,8 @@ async fn main() -> std::io::Result<()> {
         .service(download_batch)
         .service(download_get_url)
         .service(server_info)
+        .service(personalnotice_get)
+        .service(handover_kidstatus)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
