@@ -84,6 +84,12 @@ async fn personalnotice_get(req: HttpRequest, body: String) -> HttpResponse { ro
 #[post("/main.php/handover/kidStatus")]
 async fn handover_kidstatus(req: HttpRequest, body: String) -> HttpResponse { router::misc::handover_kidstatus(req, body) }
 
+#[post("/main.php/unit/deck")]
+async fn unit_deck(req: HttpRequest, body: String) -> HttpResponse { router::unit::deck(req, body) }
+
+#[post("/main.php/unit/deckName")]
+async fn unit_deckname(req: HttpRequest, body: String) -> HttpResponse { router::unit::deckname(req, body) }
+
 #[get("/server_info.zip")]
 async fn server_info() -> HttpResponse {
     HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
@@ -130,6 +136,8 @@ async fn main() -> std::io::Result<()> {
         .service(live_precise_score)
         .service(live_reward)
         .service(live_gameover)
+        .service(unit_deck)
+        .service(unit_deckname)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
