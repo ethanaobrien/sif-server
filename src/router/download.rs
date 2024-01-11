@@ -2,11 +2,13 @@ use crate::router::global;
 use json::object;
 use actix_web::{HttpResponse, HttpRequest, http::header::HeaderValue};
 use json::array;
-use std::fs;
+use include_dir::{include_dir, Dir};
 
 const DIR: &str = "http://ll.sif.moe/v7/micro_download/<OS>/<VER>/";
 const OFFICIAL_DOMAIN: &str = "http://dnw5grz2619mn.cloudfront.net";
 const DOMAIN: &str = "http://ll.sif.moe";
+
+const ASSETS_DIR: Dir = include_dir!("assets/download_targets/");
 
 fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::JsonValue {
     let mut os = String::from("android");
@@ -18,7 +20,7 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     if os.to_lowercase() == "ios" {
         os = String::from("iphone");
     }
-    let mut basedir = format!("assets/download_targets/{}/{}/", os, dl_type);
+    let mut basedir = format!("{}/{}/", os, dl_type);
     let path: String;
     match dl_type {
         "additional" => {
@@ -39,7 +41,7 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
             path = basedir.clone();
         }
     }
-    if !fs::metadata(path.clone()).is_ok() {
+    if ASSETS_DIR.get_file(path.clone()).is_none() {
         println!("Download target {} not found. Returning []", path);
         return array![];
     }
@@ -48,7 +50,7 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     if !body["excluded_package_ids"].is_null() {
         for (_i, data) in body["excluded_package_ids"].members().enumerate() {
             let path2 = format!("{}{}.json", basedir, data);
-            let pathdata = json::parse(&fs::read_to_string(path2).unwrap()).unwrap();
+            let pathdata = json::parse(&ASSETS_DIR.get_file(path2).unwrap().contents_utf8().unwrap()).unwrap();
             for (_i, data) in pathdata.members().enumerate() {
                 let pa = data["url"].to_string();
                 let pa = pa.split('/').collect::<Vec<_>>();
@@ -61,7 +63,7 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     }
     
     let mut filtered_data = array![];
-    let data = json::parse(&fs::read_to_string(path).unwrap()).unwrap();
+    let data = json::parse(&ASSETS_DIR.get_file(path).unwrap().contents_utf8().unwrap()).unwrap();
     for (_i, data) in data.members().enumerate() {
         let url = data["url"].to_string().replace(OFFICIAL_DOMAIN, DOMAIN);
         let fn1 = url.split('/').last().unwrap_or("");
