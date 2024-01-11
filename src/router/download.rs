@@ -140,11 +140,12 @@ pub fn get_url(req: HttpRequest, body: String) -> HttpResponse {
         ver = version.to_str().unwrap();
     }
     let mut list = array![];
-    let base = DIR.replace("<OS>", &body["os"].to_string()).replace("<VER>", ver);
+    let base = DIR.replace("<OS>", &body["os"].to_string().to_lowercase()).replace("<VER>", ver);
     for (_i, data) in body["path_list"].members().enumerate() {
         let link = format!("{}{}", base, data);
         list.push(link).unwrap();
     }
+    println!("{}", list.to_string());
     
     let resp = object!{
         "response_data": {

@@ -52,7 +52,7 @@ pub fn login_result() -> json::JsonValue {
 }
 
 pub fn release_info() -> json::JsonValue {
-    return array![{"id":423,"key":"UDKkj/dmBRbz+CIB+Ekqyg=="},{"id":1870,"key":"Lckl38UoH8CfOMqMSmMYsA=="},{"id":1871,"key":"acAmAWyPOCrO+R5qY9UTtQ=="},{"id":1872,"key":"LaLzU62pKnTftSEGFhMqfA=="},{"id":1873,"key":"wiaaGZSJexvY0u4poRrGSw=="}]
+    return array![{"id":423,"key":"UDKkj/dmBRbz+CIB+Ekqyg=="},{"id":1870,"key":"Lckl38UoH8CfOMqMSmMYsA=="},{"id":1871,"key":"acAmAWyPOCrO+R5qY9UTtQ=="},{"id":1872,"key":"LaLzU62pKnTftSEGFhMqfA=="},{"id":1873,"key":"wiaaGZSJexvY0u4poRrGSw=="},{"id": 1874,"key": "T18sDsU+81wLXTjCURNxJw=="}]
 }
 
 pub fn timestamp() -> u64 {

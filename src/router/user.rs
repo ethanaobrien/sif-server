@@ -19,6 +19,17 @@ pub fn user_info(req: HttpRequest, _body: String) -> HttpResponse {
     global::sign(&req, &body).body(body)
 }
 
+pub fn set_notification_token(req: HttpRequest, _body: String) -> HttpResponse {
+    let resp = object!{
+        "response_data": [],
+        "release_info": global::release_info(),
+        "status_code":200
+    };
+    
+    let body = json::stringify(resp);
+    global::sign(&req, &body).body(body)
+}
+
 pub fn lbonus_execute(req: HttpRequest, _body: String) -> HttpResponse {
     let resp = include_str!("lbonus.json");
     let resp = resp.replace("timestamppp", &global::timestamp().to_string());

@@ -259,8 +259,11 @@ pub fn get_unitall(data: JsonValue) -> JsonValue{
         waiting: []
     };
     
-    for (_i, data) in data.members().enumerate() {
-        rv["active"].push(data.clone()).unwrap();
+    for (_i, person) in data["active"].entries().enumerate() {
+        rv["active"].push(person.1.clone()).unwrap();
+    }
+    for (_i, person) in data["waiting"].entries().enumerate() {
+        rv["waiting"].push(person.1.clone()).unwrap();
     }
     return rv;
 }

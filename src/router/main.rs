@@ -65,7 +65,7 @@ fn unit(userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
     match data["action"].to_string().as_str() {
         "unitAll" => {
             Some(object!{
-                result: userdata::get_unitall(data["unit_all"].clone()),
+                result: userdata::get_unitall(userdata["unit_all"].clone()),
                 status: 200,
                 commandNum: false,
                 timeStamp: global::timestamp()
@@ -159,7 +159,7 @@ fn subscenario(_userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
             Some(object!{
                 result: {
                     subscenario_status_list: subscenario_status_list,
-                    unlocked_subscenario_ids: []
+                    unlocked_multi_unit_scenario_ids: []
                 },
                 status: 200,
                 commandNum: false,
@@ -295,7 +295,7 @@ fn navigation(_userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
 }
 fn award(userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
     match data["action"].to_string().as_str() {
-        "awards" => {
+        "awardInfo" => {
             let available_award_ranges = array![
                 [1, 572],
                 [1300, 1300],
@@ -500,7 +500,13 @@ pub fn api(req: HttpRequest, body: String) -> HttpResponse {
                     break;
                 }
             }
-            resp_data.push(json::parse(&STATIC_RESPONSE_DATA[index].to_string()).unwrap()).unwrap();
+            resp_data.push(object!{
+                result: json::parse(&STATIC_RESPONSE_DATA[index].to_string()).unwrap(),
+                status: 200,
+                commandNum: false,
+                timeStamp: global::timestamp()
+            }).unwrap();
+            continue;
         }
         
         //messy

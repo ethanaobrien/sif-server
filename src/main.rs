@@ -27,6 +27,9 @@ async fn user_user_info(req: HttpRequest, body: String) -> HttpResponse { router
 #[post("/main.php/user/changeName")]
 async fn user_change_name(req: HttpRequest, body: String) -> HttpResponse { router::user::change_name(req, body) }
 
+#[post("/main.php/user/setNotificationToken")]
+async fn user_set_notification_token(req: HttpRequest, body: String) -> HttpResponse { router::user::set_notification_token(req, body) }
+
 #[post("/main.php/gdpr/get")]
 async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse { router::gdpr::get(req, body) }
 
@@ -106,6 +109,7 @@ async fn main() -> std::io::Result<()> {
         .service(server_info)
         .service(personalnotice_get)
         .service(handover_kidstatus)
+        .service(user_set_notification_token)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
