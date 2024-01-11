@@ -26,9 +26,10 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     if os.to_lowercase() == "ios" {
         os = String::from("iphone");
     }
+    #[cfg(not(debug_assertions))]
     let mut basedir = format!("{}/{}/", os, dl_type);
     #[cfg(debug_assertions)]
-    let mut basedir = format!("assets/download_targets/{}", basedir);
+    let mut basedir = format!("assets/download_targets/{}/{}/", os, dl_type);
     
     let path: String;
     match dl_type {
