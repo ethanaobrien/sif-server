@@ -62,14 +62,14 @@ pub fn change_name(req: HttpRequest, body: String) -> HttpResponse {
     
     let resp = object!{
         "response_data": {
-            before_name: userdata["user"]["name"].clone(),
+            before_name: userdata["user_info"]["user"]["name"].clone(),
             after_name: body["name"].clone(),
             "server_timestamp": global::timestamp()
         },
         "release_info": global::release_info(),
         "status_code":200
     };
-    userdata["user"]["name"] = body["name"].clone();
+    userdata["user_info"]["user"]["name"] = body["name"].clone();
     userdata::save_acc(&key, userdata);
     let body = json::stringify(resp);
     global::sign(&req, &body).body(body)
