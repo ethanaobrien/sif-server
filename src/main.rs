@@ -30,6 +30,21 @@ async fn user_change_name(req: HttpRequest, body: String) -> HttpResponse { rout
 #[post("/main.php/user/setNotificationToken")]
 async fn user_set_notification_token(req: HttpRequest, body: String) -> HttpResponse { router::user::set_notification_token(req, body) }
 
+#[post("/main.php/live/partyList")]
+async fn live_party_list(req: HttpRequest, body: String) -> HttpResponse { router::live::party_list(req, body) }
+
+#[post("/main.php/live/preciseScore")]
+async fn live_precise_score(req: HttpRequest, body: String) -> HttpResponse { router::live::precise_score(req, body) }
+
+#[post("/main.php/live/reward")]
+async fn live_reward(req: HttpRequest, body: String) -> HttpResponse { router::live::reward(req, body) }
+
+#[post("/main.php/live/play")]
+async fn live_play(req: HttpRequest, body: String) -> HttpResponse { router::live::play(req, body) }
+
+#[post("/main.php/live/gameover")]
+async fn live_gameover(req: HttpRequest, body: String) -> HttpResponse { router::live::gameover(req, body) }
+
 #[post("/main.php/gdpr/get")]
 async fn gdpr_get(req: HttpRequest, body: String) -> HttpResponse { router::gdpr::get(req, body) }
 
@@ -110,6 +125,11 @@ async fn main() -> std::io::Result<()> {
         .service(personalnotice_get)
         .service(handover_kidstatus)
         .service(user_set_notification_token)
+        .service(live_party_list)
+        .service(live_play)
+        .service(live_precise_score)
+        .service(live_reward)
+        .service(live_gameover)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();

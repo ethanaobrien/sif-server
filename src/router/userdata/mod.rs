@@ -220,6 +220,7 @@ fn create_acc(conn: &Connection, key: &str) {
             arena_si_skill_unique_check: false, // true,
             open_v98: false
         },
+        current_deck: 1,
         bg_id: 149,
         award_id: 10011
     });

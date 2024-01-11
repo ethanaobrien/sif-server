@@ -145,7 +145,6 @@ pub fn get_url(req: HttpRequest, body: String) -> HttpResponse {
         let link = format!("{}{}", base, data);
         list.push(link).unwrap();
     }
-    println!("{}", list.to_string());
     
     let resp = object!{
         "response_data": {
