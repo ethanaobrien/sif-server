@@ -468,6 +468,33 @@ fn login(userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
         _ => None
     }
 }
+//todo
+fn profile(_userdata: &JsonValue, _data: &JsonValue) -> Option<JsonValue> {
+    None
+}
+fn secretbox(_userdata: &JsonValue, data: &JsonValue) -> Option<JsonValue> {
+    match data["action"].to_string().as_str() {
+        "all" => {
+            let list = json::parse(include_str!("main-api/secretbox.all.result.json")).unwrap();
+            Some(object!{
+                result: {
+                    use_cache: 0,
+                    is_unit_max: true,
+                    item_list: [],
+                    gauge_info: {
+                        max_gauge_point: 100,
+                        gauge_point: 0
+                    },
+                    member_category_list: list["member_category_list"].clone()
+                },
+                status: 200,
+                commandNum: false,
+                timeStamp: global::timestamp()
+            })
+        }
+        _ => None
+    }
+}
 
 pub fn api(req: HttpRequest, body: String) -> HttpResponse {
     let body = global::process_body(body);
@@ -524,6 +551,8 @@ pub fn api(req: HttpRequest, body: String) -> HttpResponse {
             "marathon" => { if let Some(d) = marathon(&userdata, data) { resp_data.push(d).unwrap(); } },
             "challenge" => { if let Some(d) = challenge(&userdata, data) { resp_data.push(d).unwrap(); } },
             "login" => { if let Some(d) = login(&userdata, data) { resp_data.push(d).unwrap(); } },
+            "profile" => { if let Some(d) = profile(&userdata, data) { resp_data.push(d).unwrap(); } },
+            "secretbox" => { if let Some(d) = secretbox(&userdata, data) { resp_data.push(d).unwrap(); } },
             _ => {
                 println!("Unhandled main api {}", data["module"]);
             }

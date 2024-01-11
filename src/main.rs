@@ -90,6 +90,9 @@ async fn unit_deck(req: HttpRequest, body: String) -> HttpResponse { router::uni
 #[post("/main.php/unit/deckName")]
 async fn unit_deckname(req: HttpRequest, body: String) -> HttpResponse { router::unit::deckname(req, body) }
 
+#[post("/main.php/secretbox/multi")]
+async fn secretbox_multi(req: HttpRequest, body: String) -> HttpResponse { router::secretbox::multi(req, body) }
+
 #[get("/server_info.zip")]
 async fn server_info() -> HttpResponse {
     HttpResponse::Ok().body(&include_bytes!("../assets/server_info.zip")[..])
@@ -138,6 +141,7 @@ async fn main() -> std::io::Result<()> {
         .service(live_gameover)
         .service(unit_deck)
         .service(unit_deckname)
+        .service(secretbox_multi)
         .default_service(web::route().to(log_unknown_request)))
         .bind(("0.0.0.0", 8080))?
         .run();
