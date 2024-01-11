@@ -11,40 +11,30 @@ lazy_static! {
     static ref STATIC_RESPONSES: JsonValue = array![
         "album.albumAll.result.json",
         "banner.bannerList.result.json",
-        "disabled.award.awardInfo.result.json",
         "disabled.background.backgroundInfo.result.json",
-        "disabled.live.liveStatus.result.json",
         "disabled.multiunit.multiunitscenarioStatus.result.json",
         "disabled.scenario.scenarioStatus.result.json",
         "disabled.subscenario.subscenarioStatus.result.json",
-        "disabled.unit.deckInfo.result.json",
-        "disabled.unit.unitAll.result.json",
         "eventscenario.status.result.json",
         "item.list.result.json",
         "live.schedule.result.json",
         "museum.info.result.json",
         "stamp.stampInfo.result.json",
-        "unit.removableSkillInfo.result.json",
-        "unit.supporterAll.result.json"
+        "unit.removableSkillInfo.result.json"
     ];
     static ref STATIC_RESPONSE_DATA: JsonValue = array![
         include_str!("main-api/album.albumAll.result.json"),
         include_str!("main-api/banner.bannerList.result.json"),
-        include_str!("main-api/disabled.award.awardInfo.result.json"),
         include_str!("main-api/disabled.background.backgroundInfo.result.json"),
-        include_str!("main-api/disabled.live.liveStatus.result.json"),
         include_str!("main-api/disabled.multiunit.multiunitscenarioStatus.result.json"),
         include_str!("main-api/disabled.scenario.scenarioStatus.result.json"),
         include_str!("main-api/disabled.subscenario.subscenarioStatus.result.json"),
-        include_str!("main-api/disabled.unit.deckInfo.result.json"),
-        include_str!("main-api/disabled.unit.unitAll.result.json"),
         include_str!("main-api/eventscenario.status.result.json"),
         include_str!("main-api/item.list.result.json"),
         include_str!("main-api/live.schedule.result.json"),
         include_str!("main-api/museum.info.result.json"),
         include_str!("main-api/stamp.stampInfo.result.json"),
-        include_str!("main-api/unit.removableSkillInfo.result.json"),
-        include_str!("main-api/unit.supporterAll.result.json")
+        include_str!("main-api/unit.removableSkillInfo.result.json")
     ];
 }
 
