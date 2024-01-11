@@ -47,6 +47,12 @@ fn acc_exists(conn: &Connection, key: &str) -> bool {
 }
 fn store_data(conn: &Connection, key: &str, value: JsonValue) {
     conn.execute(
+        &format!("UPDATE {} SET jsondata=?1", key),
+        params!(json::stringify(value))
+    ).unwrap();
+}
+fn init_data(conn: &Connection, key: &str, value: JsonValue) {
+    conn.execute(
         &format!("INSERT INTO {} (jsondata) VALUES (?1)", key),
         params!(json::stringify(value))
     ).unwrap();
@@ -83,7 +89,7 @@ fn create_acc(conn: &Connection, key: &str) {
         (), // empty list of parameters.
     ).unwrap();
     
-    store_data(conn, key, object!{
+    init_data(conn, key, object!{
         user_id: fully_random_uid,
         user_data: {
             friend_action_cnt: 0,//1291,
