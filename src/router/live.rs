@@ -2,9 +2,13 @@ use base64::{Engine as _, engine::general_purpose};
 use crate::router::{global, userdata};
 use json::{object, array};
 use actix_web::{HttpResponse, HttpRequest, http::header::HeaderValue};
-use include_dir::{include_dir, Dir};
 
+#[cfg(not(debug_assertions))]
+use include_dir::{include_dir, Dir};
+#[cfg(not(debug_assertions))]
 const NOTES_DIR: Dir = include_dir!("notes/");
+#[cfg(debug_assertions)]
+use std::fs;
 
 pub fn party_list(req: HttpRequest, _body: String) -> HttpResponse {
     //let blank_header = HeaderValue::from_static("");
@@ -87,9 +91,16 @@ pub fn play(req: HttpRequest, body: String) -> HttpResponse {
             map = body["live_difficulty_id"].clone();
         }
     }
+    #[cfg(not(debug_assertions))]
     let path = map.to_string();
+    #[cfg(debug_assertions)]
+    let path = format!("notes/{}", map.to_string());
+    
     let file = path.split("/").last().unwrap();
+    #[cfg(not(debug_assertions))]
     let chart = json::parse(&NOTES_DIR.get_file(path.clone()).unwrap().contents_utf8().unwrap()).unwrap();
+    #[cfg(debug_assertions)]
+    let chart = json::parse(&fs::read_to_string(path.clone()).unwrap()).unwrap();
     
     let charts = &json::parse(include_str!("../../assets/live_setting_map.json")).unwrap()[file];
     let all_units = json::parse(include_str!("../../assets/all_units.json")).unwrap();

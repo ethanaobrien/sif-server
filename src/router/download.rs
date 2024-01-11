@@ -2,13 +2,19 @@ use crate::router::global;
 use json::object;
 use actix_web::{HttpResponse, HttpRequest, http::header::HeaderValue};
 use json::array;
+
+#[cfg(not(debug_assertions))]
 use include_dir::{include_dir, Dir};
 
 const DIR: &str = "http://ll.sif.moe/v7/micro_download/<OS>/<VER>/";
 const OFFICIAL_DOMAIN: &str = "http://dnw5grz2619mn.cloudfront.net";
 const DOMAIN: &str = "http://ll.sif.moe";
 
+#[cfg(not(debug_assertions))]
 const ASSETS_DIR: Dir = include_dir!("assets/download_targets/");
+
+#[cfg(debug_assertions)]
+use std::fs;
 
 fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::JsonValue {
     let mut os = String::from("android");
@@ -21,6 +27,9 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
         os = String::from("iphone");
     }
     let mut basedir = format!("{}/{}/", os, dl_type);
+    #[cfg(debug_assertions)]
+    let mut basedir = format!("assets/download_targets/{}", basedir);
+    
     let path: String;
     match dl_type {
         "additional" => {
@@ -41,16 +50,27 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
             path = basedir.clone();
         }
     }
+    #[cfg(not(debug_assertions))]
     if ASSETS_DIR.get_file(path.clone()).is_none() {
         println!("Download target {} not found. Returning []", path);
         return array![];
     }
+    #[cfg(debug_assertions)]
+    if !fs::metadata(path.clone()).is_ok() {
+        println!("Download target {} not found. Returning []", path);
+        return array![];
+    }
+    
     let mut blacklist = array![];
     
     if !body["excluded_package_ids"].is_null() {
         for (_i, data) in body["excluded_package_ids"].members().enumerate() {
             let path2 = format!("{}{}.json", basedir, data);
+            #[cfg(debug_assertions)]
+            let pathdata = json::parse(&fs::read_to_string(path2).unwrap()).unwrap();
+            #[cfg(not(debug_assertions))]
             let pathdata = json::parse(&ASSETS_DIR.get_file(path2).unwrap().contents_utf8().unwrap()).unwrap();
+            
             for (_i, data) in pathdata.members().enumerate() {
                 let pa = data["url"].to_string();
                 let pa = pa.split('/').collect::<Vec<_>>();
@@ -63,7 +83,11 @@ fn get_dl_response(host: &str, dl_type: &str, body: json::JsonValue) -> json::Js
     }
     
     let mut filtered_data = array![];
+    #[cfg(not(debug_assertions))]
     let data = json::parse(&ASSETS_DIR.get_file(path).unwrap().contents_utf8().unwrap()).unwrap();
+    #[cfg(debug_assertions)]
+    let data = json::parse(&fs::read_to_string(path).unwrap()).unwrap();
+    
     for (_i, data) in data.members().enumerate() {
         let url = data["url"].to_string().replace(OFFICIAL_DOMAIN, DOMAIN);
         let fn1 = url.split('/').last().unwrap_or("");
