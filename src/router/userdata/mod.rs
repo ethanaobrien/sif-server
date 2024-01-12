@@ -31,6 +31,7 @@ fn create_uid_store(conn: &Connection) {
                 )",
                 (), // empty list of parameters.
             ).unwrap();
+            init_data(conn, "uids", array![]);
         }
     }
     store_data(conn, "uids", array![]);
@@ -127,7 +128,7 @@ fn create_acc(conn: &Connection, key: &str) {
         user_info: {
             "user": {
                 "user_id": fully_random_uid,
-                "name": "030",
+                "name": "New User",
                 "level": 237,
                 "exp": 779537,
                 "previous_exp": 778427,
